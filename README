@@ -1,1 +1,7 @@
-Test!
+This is just an addition to the Matrix class released with the Arduino (C)
+software. A friend and I've been messing around with it, and I've wanted to
+know more about the internals, so I've been poking around in the code, and 
+adding some debug features. It's really nothing to see. I've also been meaning
+to get a chance to get my fingers wet in Git/GitHub, and this seemed to be the
+perfect opportunity, since I needed to be able to sync the files up between
+multiple computers/operating systems.
