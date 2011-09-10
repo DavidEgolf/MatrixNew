@@ -103,13 +103,17 @@ void MatrixNew::putByte(uint8_t data)
   uint8_t mask;
   while(i > 0) {
     mask = 0x01 << (i - 1);         // get bitmask
-    digitalWrite(_pinClock, LOW);   // tick
+    _clockBit = 0;
+    digitalWrite(_pinClock, _clockBit);   // tick
     if (data & mask){               // choose bit
-      digitalWrite(_pinData, HIGH); // set 1
+    	_dataBit = 1;
+      digitalWrite(_pinData, _dataBit); // set 1
     }else{
-      digitalWrite(_pinData, LOW);  // set 0
+    	_dataBit = 0;
+      digitalWrite(_pinData, _dataBit);  // set 0
     }
-    digitalWrite(_pinClock, HIGH);  // tock
+    _clockBit = 1;
+    digitalWrite(_pinClock, _clockBit);  // tock
     --i;                            // move to lesser bit
   }
 }
@@ -117,13 +121,16 @@ void MatrixNew::putByte(uint8_t data)
 // sets register to a byte value for all screens
 void MatrixNew::setRegister(uint8_t reg, uint8_t data)
 {
-  digitalWrite(_pinLoad, LOW); // begin
+  _loadBit = 0;
+  digitalWrite(_pinLoad, _loadBit); // begin
   for(uint8_t i = 0; i < _screens; ++i){
     putByte(reg);  // specify register
     putByte(data); // send data
   }
-  digitalWrite(_pinLoad, HIGH);  // latch in data
-  digitalWrite(_pinLoad, LOW); // end
+  _loadBit = 1;
+  digitalWrite(_pinLoad, _loadBit);  // latch in data
+  _loadBit = 0;
+  digitalWrite(_pinLoad, _loadBit); // end
 }
 
 // syncs row of display with buffer
@@ -133,13 +140,16 @@ void MatrixNew::syncRow(uint8_t row)
   
   // uint8_t's can't be negative, so don't test for negative row
   if (row >= 8) return;
-  digitalWrite(_pinLoad, LOW); // begin
+  _loadBit = 0;
+  digitalWrite(_pinLoad, _loadBit); // begin
   for(uint8_t i = 0; i < _screens; ++i){
     putByte(8 - row);                // specify register
     putByte(_buffer[row + (8 * i)]); // send data
   }
-  digitalWrite(_pinLoad, HIGH);  // latch in data
-  digitalWrite(_pinLoad, LOW); // end
+  _loadBit = 1;
+  digitalWrite(_pinLoad, _loadBit);  // latch in data
+  _loadBit = 0;
+  digitalWrite(_pinLoad, _loadBit); // end
 }
 
 /******************************************************************************
@@ -237,16 +247,16 @@ void MatrixNew::wait()
 
 uint8_t MatrixNew::printBufferToSerial(uint8_t row)
 {
-  String buildUpon;
-  uint8_t tehBuffz;
+  uint8_t tehBuffz[8];
   for(uint8_t i = 0; i < 8; ++i){
-      tehBuffz += _buffer[i+(8*row)];
-      tehBuffz << 1;
+      *tehBuffz += _buffer[i+(8*row)];
+      if(i < 7)
+	      *tehBuffz << 8;
   }
-  return tehBuffz;
+  return *tehBuffz;
 }
 
-char MatrixNew::printState()
+void MatrixNew::displayState()
 {
-	return 'a';
+	
 }

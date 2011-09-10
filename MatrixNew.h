@@ -31,6 +31,10 @@ class MatrixNew
     uint8_t _pinData;
     uint8_t _pinClock;
     uint8_t _pinLoad;
+    
+    bool _dataBit;
+    bool _clockBit;
+    bool _loadBit;
 
     uint8_t* _buffer;
     uint8_t _screens;
@@ -51,7 +55,7 @@ class MatrixNew
     void clear(void);
     void wait();
     uint8_t printBufferToSerial(uint8_t);
-    char printState();
+    void displayState();
 };
 
 #endif
