@@ -1,20 +1,6 @@
 #include <Sprite.h>
 #include <MatrixNew.h>
 
-// Hello Matrix
-// by Nicholas Zambetti <http://www.zambetti.com>
-
-// Demonstrates the use of the Matrix library
-// For MAX7219 LED Matrix Controllers
-// Blinks welcoming face on screen
-
-// Created 13 February 2006
-
-/* create a new Matrix instance
- pin 0: data  (din)
- pin 1: load  (load)
- pin 2: clock (clk)
- */
 MatrixNew myMatrix = MatrixNew(2,3,4);
 
 void setup()
