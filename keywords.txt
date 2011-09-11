@@ -6,15 +6,19 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-Matrix	KEYWORD1
+MatrixNew	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
 setBrightness	KEYWORD2
-write	KEYWORD2
-clear	KEYWORD2
+write			KEYWORD2
+clear			KEYWORD2
+bufferAsString	KEYWORD2
+wait			KEYWORD2
+displayState	KEYWORD2
+getBuffer		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

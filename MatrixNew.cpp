@@ -245,15 +245,41 @@ void MatrixNew::wait()
 
 }
 
-uint8_t MatrixNew::printBufferToSerial(uint8_t row)
+uint8_t MatrixNew::getBuffer(uint8_t col, uint8_t screen)
 {
-  uint8_t tehBuffz[8];
-  for(uint8_t i = 0; i < 8; ++i){
-      *tehBuffz += _buffer[i+(8*row)];
-      if(i < 7)
-	      *tehBuffz << 8;
+	
+  //return _buffer[col+(8*screen)];]
+  col++;
+  if(col == 8)
+	col = 0;
+  return _buffer[col];
+
+}
+
+//Funny issue. 
+String MatrixNew::bufferAsString()
+{
+  String outputString = "X12345678\n";
+  for(int j = 0; j < 8; j++)
+  {
+	outputString += (String)(j+1);
+    uint8_t mask, result;
+    result = getBuffer(j);
+    for(int k = 1; k < 9; k++)
+    {
+      mask = 0x01 << (k - 1);
+      if(result & mask)
+	  {
+        outputString += "1";
+	  }
+      else
+	  {
+		outputString += "0";
+	  }
+    }
+	outputString += "\n";
   }
-  return *tehBuffz;
+  return outputString;
 }
 
 void MatrixNew::displayState()

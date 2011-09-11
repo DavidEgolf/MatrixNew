@@ -54,7 +54,8 @@ class MatrixNew
     void write(uint8_t, uint8_t, Sprite);
     void clear(void);
     void wait();
-    uint8_t printBufferToSerial(uint8_t);
+    uint8_t getBuffer(uint8_t, uint8_t = 0);
+	String bufferAsString();
     void displayState();
 };
 
