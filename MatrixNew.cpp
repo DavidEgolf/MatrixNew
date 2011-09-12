@@ -41,7 +41,8 @@ extern "C" {
 #include "Sprite.h"
 #include "MatrixNew.h"
 #include <WString.h>
-
+#undef round
+#include <WProgram.h>
 /******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -248,7 +249,7 @@ void MatrixNew::wait()
 uint8_t MatrixNew::getBuffer(uint8_t col, uint8_t screen)
 {
 	
-  //return _buffer[col+(8*screen)];]
+  //return _buffer[col+(8*screen)];
   col++;
   if(col == 8)
 	col = 0;
@@ -259,7 +260,7 @@ uint8_t MatrixNew::getBuffer(uint8_t col, uint8_t screen)
 //Funny issue. 
 String MatrixNew::bufferAsString()
 {
-  String outputString = "X12345678\n";
+  String outputString = "X12345670\n";
   for(int j = 0; j < 8; j++)
   {
 	outputString += (String)(j+1);
@@ -284,5 +285,13 @@ String MatrixNew::bufferAsString()
 
 void MatrixNew::displayState()
 {
-	
+	Serial.begin(9600);
+	for(int i = 0; i <= 10; i++)
+	{
+		String somestring;
+		somestring = (String)i + " : ";
+		Serial.print(somestring);
+		Serial.println(_buffer[i], BIN);
+	}
+	Serial.end();
 }
